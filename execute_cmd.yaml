@@ -2,5 +2,5 @@
 - name: Execute command on host
   hosts: all
   tasks:
-    - name: Common to display system uptime
-      ansible.builtin.command: uptime
+    - name: Command to display system date
+      ansible.builtin.command: date
