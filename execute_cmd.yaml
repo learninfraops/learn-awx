@@ -1,0 +1,6 @@
+---
+- name: Execute command on host
+  hosts: all
+  tasks:
+    - name: Common to display system uptime
+      ansible.builtin.command: uptime
