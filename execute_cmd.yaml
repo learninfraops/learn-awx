@@ -3,4 +3,4 @@
   hosts: all
   tasks:
     - name: Command to display system date
-      ansible.builtin.command: date
+      ansible.builtin.command: ls
