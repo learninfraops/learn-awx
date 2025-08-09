@@ -4,3 +4,8 @@
   tasks:
     - name: Command to list files
       ansible.builtin.shell: ls -la | grep README.md
+      register: my_output
+
+    - name: Display my_output
+      ansible.builtin.debug:
+        var: my_output
