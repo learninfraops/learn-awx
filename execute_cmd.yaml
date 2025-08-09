@@ -2,5 +2,5 @@
 - name: Execute command on host
   hosts: all
   tasks:
-    - name: Command to display system date
-      ansible.builtin.command: date
+    - name: Command to list files
+      ansible.builtin.shell: ls -la
