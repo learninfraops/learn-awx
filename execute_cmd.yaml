@@ -3,9 +3,4 @@
   hosts: all
   tasks:
     - name: Command to display system date
-      ansible.builtin.shell: "ls -la| grep README.md"
-      register: my_output
-
-    - name: Display my_ouptput
-      ansible.builtin.debug:
-        var: my_output.stdout_lines
+      ansible.builtin.shell: "ls -la"
