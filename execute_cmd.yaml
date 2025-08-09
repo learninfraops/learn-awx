@@ -3,4 +3,4 @@
   hosts: all
   tasks:
     - name: Command to display system date
-      ansible.builtin.shell: ls -la | grep project
+      ansible.builtin.shell: ls -la | grep "project"
