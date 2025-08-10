@@ -1,14 +1,1 @@
----
-- name: Install nginx using awx and Ansible
-  hosts: all
-  become: yes
-  tasks:
-    - name: Install nginx
-      apt:
-        name: nginx
-        state: present
 
-    - name: Startup nginx
-      service:
-        name: nginx
-        state: started
