@@ -9,5 +9,4 @@
         name: "{{ bucket_name }}"
         project: "{{ project_id }}"
         auth_kind: serviceaccount
-        service_account_contents: "{{ google-cloud-sa }}"
         state: present
