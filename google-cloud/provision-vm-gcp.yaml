@@ -6,7 +6,7 @@
   tasks:
     - name: create a disk
       google.cloud.gcp_compute_disk:
-        name: disk-instance
+        name: disk-instance-2
         size_gb: 50
         source_image: projects/debian-cloud/global/images/family/debian-11
         zone: us-central1-a
