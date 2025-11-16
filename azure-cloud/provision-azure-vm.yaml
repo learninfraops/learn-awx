@@ -1,0 +1,64 @@
+---
+- name: Provision Storage Account in Azure Cloud
+  hosts: localhost
+  gather_facts: no
+
+  tasks:
+
+    - name: Create virtual network
+      azure_rm_virtualnetwork:
+        resource_group: "{{ resource_group_name }}"
+        name: myVnet
+        address_prefixes: "10.0.0.0/16"
+
+    - name: Add subnet
+      azure_rm_subnet:
+        resource_group: "{{ resource_group_name }}"
+        name: mySubnet
+        address_prefix: "10.0.1.0/24"
+        virtual_network: myVnet
+
+    - name: Create public IP address
+      azure_rm_publicipaddress:
+        resource_group: "{{ resource_group_name }}"
+        allocation_method: Static
+        name: myPublicIP
+      register: output_ip_address
+
+    - name: Create Network Security Group that allows SSH
+      azure_rm_securitygroup:
+        resource_group: "{{ resource_group_name }}"
+        name: myNetworkSecurityGroup
+        rules:
+          - name: SSH
+            protocol: Tcp
+            destination_port_range: 22
+            access: Allow
+            priority: 1001
+            direction: Inbound
+
+    - name: Create virtual network interface card
+      azure_rm_networkinterface:
+        resource_group: "{{ resource_group_name }}"
+        name: myNIC
+        virtual_network: myVnet
+        subnet: mySubnet
+        security_group: myNetworkSecurityGroup
+        ip_configurations:
+          - name: ipconfig1
+            public_ip_address_name: myPublicIP
+            primary: true
+
+    - name: Create VM
+      azure.azcollection.azure_rm_virtualmachine:
+        resource_group: "{{ resource_group_name }}"
+        name: "{{ vm_name }}"
+        vm_size: Standard_D2s_v3
+        admin_username: "{{ vm_admin_username }}"
+        admin_password: "{{ vm_admin_password }}"
+        network_interfaces: myNIC
+        image:
+          offer: UbuntuServer
+          publisher: Canonical
+          sku: 18.04-LTS
+          version: latest
